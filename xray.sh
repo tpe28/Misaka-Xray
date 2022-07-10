@@ -70,6 +70,11 @@ WS="false"
 XTLS="false"
 KCP="false"
 
+## 统计脚本运行次数
+COUNT=$(curl -sm8 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fraw.githubusercontents.com%2Ftpe28%2FMisaka-Xray%2Fmaster%2Fxray.sh&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" 2>&1) &&
+TODAY=$(expr "$COUNT" : '.*\s\([0-9]\{1,\}\)\s/.*')
+TOTAL=$(expr "$COUNT" : '.*/\s\([0-9]\{1,\}\)\s.*')
+
 checkCentOS8() {
 	if [[ -n $(cat /etc/os-release | grep "CentOS Linux 8") ]]; then
 		yellow "检测到当前VPS系统为CentOS 8，是否升级为CentOS Stream 8以确保软件包正常安装？"
@@ -1779,6 +1784,7 @@ menu() {
 	echo -e "# ${GREEN}博客${PLAIN}: https://owo.misaka.rest                             #"
 	echo -e "# ${GREEN}TG群${PLAIN}: https://t.me/misakanetcn                            #"
 	echo "#############################################################"
+	green "今日运行次数：$TODAY   总共运行次数：$TOTAL"
 	echo -e "  "
 	echo -e "  ${GREEN}1.${PLAIN}   安装Xray-VMESS${PLAIN}${RED}(不推荐)${PLAIN}"
 	echo -e "  ${GREEN}2.${PLAIN}   安装Xray-${BLUE}VMESS+mKCP${PLAIN}"
